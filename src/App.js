@@ -19,15 +19,22 @@ function App() {
 
   const handleCheckboxChange = (rollNo, type) => {
     setAttendance((prev) => {
-      const updatedAttendance = { ...prev };
-      if (!updatedAttendance[rollNo]) {
-        updatedAttendance[rollNo] = {
-          absent: false,
-          od: false,
-          informedLeave: false,
-        };
-      }
-      updatedAttendance[rollNo][type] = !updatedAttendance[rollNo][type];
+      const prevAttendance = prev[rollNo] || {
+        absent: false,
+        od: false,
+        informedLeave: false,
+      };
+
+      // ✅ Ensuring new object creation for React state update
+      const updatedAttendance = {
+        ...prev,
+        [rollNo]: {
+          ...prevAttendance,
+          [type]: !prevAttendance[type], // Toggling the selected type
+        },
+      };
+
+      console.log("Updated Attendance:", updatedAttendance); // Debug log
       return updatedAttendance;
     });
   };
