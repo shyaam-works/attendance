@@ -113,7 +113,7 @@ function App() {
   }
 
   return (
-    <div>
+    <div className="container">
       <h1>Attendance System</h1>
 
       <input
@@ -123,54 +123,56 @@ function App() {
         onChange={(e) => setSearchTerm(e.target.value)}
       />
 
-      <table>
-        <thead>
-          <tr>
-            <th>Roll No</th>
-            <th>Name</th>
-            <th>Absent</th>
-            <th>OD</th>
-            <th>Informed Leave</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredStudents.map((student) => (
-            <tr key={student["ROLL NO"]}>
-              <td>{student["ROLL NO"]}</td>
-              <td>{student.NAME}</td>
-              <td>
-                <input
-                  type="checkbox"
-                  checked={attendance[student["ROLL NO"]]?.absent || false}
-                  onChange={() =>
-                    handleCheckboxChange(student["ROLL NO"], "absent")
-                  }
-                />
-              </td>
-              <td>
-                <input
-                  type="checkbox"
-                  checked={attendance[student["ROLL NO"]]?.od || false}
-                  onChange={() =>
-                    handleCheckboxChange(student["ROLL NO"], "od")
-                  }
-                />
-              </td>
-              <td>
-                <input
-                  type="checkbox"
-                  checked={
-                    attendance[student["ROLL NO"]]?.informedLeave || false
-                  }
-                  onChange={() =>
-                    handleCheckboxChange(student["ROLL NO"], "informedLeave")
-                  }
-                />
-              </td>
+      <div className="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Roll No</th>
+              <th>Name</th>
+              <th>Absent</th>
+              <th>OD</th>
+              <th>Informed Leave</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {filteredStudents.map((student) => (
+              <tr key={student["ROLL NO"]}>
+                <td>{student["ROLL NO"]}</td>
+                <td>{student.NAME}</td>
+                <td>
+                  <input
+                    type="checkbox"
+                    checked={attendance[student["ROLL NO"]]?.absent || false}
+                    onChange={() =>
+                      handleCheckboxChange(student["ROLL NO"], "absent")
+                    }
+                  />
+                </td>
+                <td>
+                  <input
+                    type="checkbox"
+                    checked={attendance[student["ROLL NO"]]?.od || false}
+                    onChange={() =>
+                      handleCheckboxChange(student["ROLL NO"], "od")
+                    }
+                  />
+                </td>
+                <td>
+                  <input
+                    type="checkbox"
+                    checked={
+                      attendance[student["ROLL NO"]]?.informedLeave || false
+                    }
+                    onChange={() =>
+                      handleCheckboxChange(student["ROLL NO"], "informedLeave")
+                    }
+                  />
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
       <button onClick={generateAttendanceMessage}>
         Generate Attendance Message

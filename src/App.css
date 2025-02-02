@@ -1,22 +1,23 @@
+/* Basic Reset */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-div {
+.container {
   font-family: Arial, sans-serif;
-  padding: 20px;
-  background-color: #f4f4f9;
   max-width: 900px;
   margin: auto;
+  padding: 20px;
+  background-color: #f4f4f9;
 }
 
 h1 {
   text-align: center;
   color: #333;
-  margin-bottom: 20px;
   font-size: 2rem;
+  margin-bottom: 20px;
 }
 
 input[type="text"] {
@@ -48,7 +49,7 @@ input[type="text"]:focus {
 table {
   width: 100%;
   border-collapse: collapse;
-  min-width: 700px; /* Adjusted to fit the new column */
+  min-width: 700px;
 }
 
 th,
@@ -108,13 +109,9 @@ textarea {
   min-height: 150px;
 }
 
-div.loading {
-  text-align: center;
-  font-size: 1.1rem;
-  color: #555;
-  padding: 20px;
-}
+/* Media Queries for Responsiveness */
 
+/* Mobile First Design */
 @media (max-width: 768px) {
   h1 {
     font-size: 1.75rem;
@@ -142,8 +139,9 @@ div.loading {
   }
 }
 
+/* Smaller devices */
 @media (max-width: 480px) {
-  div {
+  .container {
     padding: 15px;
   }
 
