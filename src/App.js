@@ -8,7 +8,7 @@ function App() {
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:3500/Sheet1")
+    fetch("https://students-be8j.onrender.com/Sheet1")
       .then((response) => response.json())
       .then((data) => {
         setStudents(data);
@@ -25,16 +25,15 @@ function App() {
         informedLeave: false,
       };
 
-      // ✅ Ensuring new object creation for React state update
       const updatedAttendance = {
         ...prev,
         [rollNo]: {
           ...prevAttendance,
-          [type]: !prevAttendance[type], // Toggling the selected type
+          [type]: !prevAttendance[type],
         },
       };
 
-      console.log("Updated Attendance:", updatedAttendance); // Debug log
+      console.log("Updated Attendance:", updatedAttendance);
       return updatedAttendance;
     });
   };
