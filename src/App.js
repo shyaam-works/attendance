@@ -77,7 +77,7 @@ function App() {
     });
 
     let message = `${date}\nAttendance detail ${
-      absentCount + odCount + informedLeaveCount
+      students.length - (absentCount + odCount + informedLeaveCount)
     }/${students.length}\n\nAbsent:\n${absentList.join("\n")}`;
 
     if (odCount > 0) {
