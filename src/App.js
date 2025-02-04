@@ -76,14 +76,22 @@ function App() {
       }
     });
 
+    // Only add the attendance details if there are any records
     let message = `${date}\nAttendance detail ${
       students.length - (absentCount + odCount + informedLeaveCount)
-    }/${students.length}\n\nAbsent:\n${absentList.join("\n")}`;
+    }/${students.length}`;
 
+    // Add Absent section if there are absent students
+    if (absentCount > 0) {
+      message += `\n\nAbsent:\n${absentList.join("\n")}`;
+    }
+
+    // Add OD section if there are OD students
     if (odCount > 0) {
       message += `\n\nOD:\n${odList.join("\n")}`;
     }
 
+    // Add Informed Leave section if there are students on informed leave
     if (informedLeaveCount > 0) {
       message += `\n\nInformed Leave:\n${informedLeaveList.join("\n")}`;
     }
