@@ -8,7 +8,7 @@ function App() {
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    fetch("https://students-be8j.onrender.com/Sheet")
+    fetch("https://students-be8j.onrender.com/Sheet1")
       .then((response) => response.json())
       .then((data) => {
         setStudents(data);
