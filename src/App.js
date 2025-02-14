@@ -96,6 +96,10 @@ function App() {
       message += `\n\nInformed Leave:\n${informedLeaveList.join("\n")}`;
     }
 
+    if (informedLeaveCount === 0 && odCount === 0 && absentCount === 0) {
+      message += "\n\nNil";
+    }
+
     message += `\n\nThank you all`;
 
     setAttendanceMessage(message);
