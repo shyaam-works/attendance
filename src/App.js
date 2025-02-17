@@ -17,25 +17,15 @@ function App() {
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
-  const handleCheckboxChange = (rollNo, type) => {
-    setAttendance((prev) => {
-      const prevAttendance = prev[rollNo] || {
-        absent: false,
-        od: false,
-        informedLeave: false,
-      };
-
-      const updatedAttendance = {
-        ...prev,
-        [rollNo]: {
-          ...prevAttendance,
-          [type]: !prevAttendance[type],
-        },
-      };
-
-      console.log("Updated Attendance:", updatedAttendance);
-      return updatedAttendance;
-    });
+  const handleRadioChange = (rollNo, type) => {
+    setAttendance((prev) => ({
+      ...prev,
+      [rollNo]: {
+        absent: type === "absent",
+        od: type === "od",
+        informedLeave: type === "informedLeave",
+      },
+    }));
   };
 
   const generateAttendanceMessage = () => {
@@ -58,47 +48,40 @@ function App() {
         if (attendance[rollNo].absent) {
           absentCount++;
           absentList.push(
-            `${rollNo.padEnd(rollNoWidth)} ${student.NAME.padEnd(nameWidth)}`
+            `${String(rollNo).padEnd(rollNoWidth)} ${student.NAME.padEnd(
+              nameWidth
+            )}`
           );
         }
         if (attendance[rollNo].od) {
           odCount++;
           odList.push(
-            `${rollNo.padEnd(rollNoWidth)} ${student.NAME.padEnd(nameWidth)}`
+            `${String(rollNo).padEnd(rollNoWidth)} ${student.NAME.padEnd(
+              nameWidth
+            )}`
           );
         }
         if (attendance[rollNo].informedLeave) {
           informedLeaveCount++;
           informedLeaveList.push(
-            `${rollNo.padEnd(rollNoWidth)} ${student.NAME.padEnd(nameWidth)}`
+            `${String(rollNo).padEnd(rollNoWidth)} ${student.NAME.padEnd(
+              nameWidth
+            )}`
           );
         }
       }
     });
 
-    // Only add the attendance details if there are any records
     let message = `${date}\nAttendance detail ${
       students.length - (absentCount + odCount + informedLeaveCount)
     }/${students.length}`;
 
-    // Add Absent section if there are absent students
-    if (absentCount > 0) {
-      message += `\n\nAbsent:\n${absentList.join("\n")}`;
-    }
-
-    // Add OD section if there are OD students
-    if (odCount > 0) {
-      message += `\n\nOD:\n${odList.join("\n")}`;
-    }
-
-    // Add Informed Leave section if there are students on informed leave
-    if (informedLeaveCount > 0) {
+    if (absentCount > 0) message += `\n\nAbsent:\n${absentList.join("\n")}`;
+    if (odCount > 0) message += `\n\nOD:\n${odList.join("\n")}`;
+    if (informedLeaveCount > 0)
       message += `\n\nInformed Leave:\n${informedLeaveList.join("\n")}`;
-    }
-
-    if (informedLeaveCount === 0 && odCount === 0 && absentCount === 0) {
+    if (absentCount === 0 && odCount === 0 && informedLeaveCount === 0)
       message += "\n\nNil";
-    }
 
     message += `\n\nThank you all`;
 
@@ -153,30 +136,31 @@ function App() {
                 <td>{student.NAME}</td>
                 <td>
                   <input
-                    type="checkbox"
+                    type="radio"
+                    name={`attendance-${student["ROLL NO"]}`}
                     checked={attendance[student["ROLL NO"]]?.absent || false}
                     onChange={() =>
-                      handleCheckboxChange(student["ROLL NO"], "absent")
+                      handleRadioChange(student["ROLL NO"], "absent")
                     }
                   />
                 </td>
                 <td>
                   <input
-                    type="checkbox"
+                    type="radio"
+                    name={`attendance-${student["ROLL NO"]}`}
                     checked={attendance[student["ROLL NO"]]?.od || false}
-                    onChange={() =>
-                      handleCheckboxChange(student["ROLL NO"], "od")
-                    }
+                    onChange={() => handleRadioChange(student["ROLL NO"], "od")}
                   />
                 </td>
                 <td>
                   <input
-                    type="checkbox"
+                    type="radio"
+                    name={`attendance-${student["ROLL NO"]}`}
                     checked={
                       attendance[student["ROLL NO"]]?.informedLeave || false
                     }
                     onChange={() =>
-                      handleCheckboxChange(student["ROLL NO"], "informedLeave")
+                      handleRadioChange(student["ROLL NO"], "informedLeave")
                     }
                   />
                 </td>
@@ -186,10 +170,12 @@ function App() {
         </table>
       </div>
 
-      <button onClick={generateAttendanceMessage}>
+      <button onClick={generateAttendanceMessage} disabled={!students.length}>
         Generate Attendance Message
       </button>
-      <button onClick={sendToWhatsApp}>Send to WhatsApp</button>
+      <button onClick={sendToWhatsApp} disabled={!attendanceMessage}>
+        Send to WhatsApp
+      </button>
 
       <textarea
         id="attendanceMessage"
