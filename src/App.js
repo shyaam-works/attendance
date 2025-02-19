@@ -22,7 +22,8 @@ function App() {
       ...prev,
       [rollNo]: {
         absent: type === "absent",
-        od: type === "od",
+        externalOd: type === "externalOd",
+        internalOd: type === "internalOd",
         informedLeave: type === "informedLeave",
       },
     }));
@@ -33,11 +34,12 @@ function App() {
 
     const date = new Date().toLocaleDateString("en-GB");
     let absentCount = 0;
-    let odCount = 0;
+    let externalOdCount = 0;
     let informedLeaveCount = 0;
     let absentList = [];
-    let odList = [];
+    let externalOdList = [];
     let informedLeaveList = [];
+    let internalOdList = [];
 
     const rollNoWidth = 10;
     const nameWidth = 20;
@@ -53,9 +55,9 @@ function App() {
             )}`
           );
         }
-        if (attendance[rollNo].od) {
-          odCount++;
-          odList.push(
+        if (attendance[rollNo].externalOd) {
+          externalOdCount++;
+          externalOdList.push(
             `${String(rollNo).padEnd(rollNoWidth)} ${student.NAME.padEnd(
               nameWidth
             )}`
@@ -69,24 +71,33 @@ function App() {
             )}`
           );
         }
+        if (attendance[rollNo].internalOd) {
+          internalOdList.push(
+            `${String(rollNo).padEnd(rollNoWidth)} ${student.NAME.padEnd(
+              nameWidth
+            )}`
+          );
+        }
       }
     });
 
     let message = `${date}\nAttendance detail ${
-      students.length - (absentCount + odCount + informedLeaveCount)
+      students.length - (absentCount + externalOdCount + informedLeaveCount)
     }/${students.length}`;
 
     if (absentCount > 0) message += `\n\nAbsent:\n${absentList.join("\n")}`;
-    if (odCount > 0) message += `\n\nOD:\n${odList.join("\n")}`;
+    if (externalOdCount > 0)
+      message += `\n\nExternal OD:\n${externalOdList.join("\n")}`;
     if (informedLeaveCount > 0)
       message += `\n\nInformed Leave:\n${informedLeaveList.join("\n")}`;
-    if (absentCount === 0 && odCount === 0 && informedLeaveCount === 0)
+    if (internalOdList.length > 0)
+      message += `\n\nInternal OD:\n${internalOdList.join("\n")}`;
+    if (absentCount === 0 && externalOdCount === 0 && informedLeaveCount === 0)
       message += "\n\nNil";
 
     message += `\n\nThank you all`;
 
     setAttendanceMessage(message);
-    document.getElementById("attendanceMessage").readOnly = false;
   };
 
   const sendToWhatsApp = () => {
@@ -125,7 +136,8 @@ function App() {
               <th>Roll No</th>
               <th>Name</th>
               <th>Absent</th>
-              <th>OD</th>
+              <th>External OD</th>
+              <th>Internal OD</th>
               <th>Informed Leave</th>
             </tr>
           </thead>
@@ -148,8 +160,24 @@ function App() {
                   <input
                     type="radio"
                     name={`attendance-${student["ROLL NO"]}`}
-                    checked={attendance[student["ROLL NO"]]?.od || false}
-                    onChange={() => handleRadioChange(student["ROLL NO"], "od")}
+                    checked={
+                      attendance[student["ROLL NO"]]?.externalOd || false
+                    }
+                    onChange={() =>
+                      handleRadioChange(student["ROLL NO"], "externalOd")
+                    }
+                  />
+                </td>
+                <td>
+                  <input
+                    type="radio"
+                    name={`attendance-${student["ROLL NO"]}`}
+                    checked={
+                      attendance[student["ROLL NO"]]?.internalOd || false
+                    }
+                    onChange={() =>
+                      handleRadioChange(student["ROLL NO"], "internalOd")
+                    }
                   />
                 </td>
                 <td>
@@ -179,7 +207,7 @@ function App() {
 
       <textarea
         id="attendanceMessage"
-        readOnly
+        readOnly={!attendanceMessage}
         value={attendanceMessage}
         rows={10}
         cols={50}
