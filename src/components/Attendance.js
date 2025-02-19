@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 
 function Attendance() {
   const { className } = useParams();
+  console.log(className);
   const [students, setStudents] = useState([]);
   const [attendance, setAttendance] = useState({});
   const [attendanceMessage, setAttendanceMessage] = useState("");
@@ -13,6 +14,7 @@ function Attendance() {
   useEffect(() => {
     setLoading(true);
     setError(false);
+
     fetch(`https://students-be8j.onrender.com/${className}`)
       .then((response) => {
         if (!response.ok) {
@@ -22,6 +24,7 @@ function Attendance() {
       })
       .then((data) => {
         setStudents(data);
+        console.log(data);
         setLoading(false);
       })
       .catch(() => {
@@ -107,10 +110,12 @@ function Attendance() {
   };
 
   const filteredStudents = students.filter((student) => {
-    const lowercasedTerm = searchTerm.toLowerCase();
+    const lowercasedTerm = searchTerm ? searchTerm.toLowerCase() : "";
+
     return (
-      student.NAME.toLowerCase().includes(lowercasedTerm) ||
-      student["ROLL NO"].toString().includes(lowercasedTerm)
+      (student.NAME && student.NAME.toLowerCase().includes(lowercasedTerm)) ||
+      (student["ROLL NO"] &&
+        student["ROLL NO"].toString().includes(lowercasedTerm))
     );
   });
 
