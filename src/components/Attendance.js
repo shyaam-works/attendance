@@ -6,7 +6,7 @@ function Attendance() {
   console.log(className);
   const [students, setStudents] = useState([]);
   const [attendance, setAttendance] = useState({});
-  const [attendanceMessage, setAttendanceMessage] = useState("");
+  const [attendanceMessage, setAttendanceMessage] = "";
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -23,8 +23,12 @@ function Attendance() {
         return response.json();
       })
       .then((data) => {
-        setStudents(data);
-        console.log(data);
+        const formattedData = data.map((student) => ({
+          ...student,
+          NAME: student.NAME.toUpperCase(),
+        }));
+        setStudents(formattedData);
+        console.log(formattedData);
         setLoading(false);
       })
       .catch(() => {
@@ -150,6 +154,7 @@ function Attendance() {
                 <input
                   type="radio"
                   name={`attendance-${student["ROLL NO"]}`}
+                  checked={attendance[student["ROLL NO"]]?.absent || false}
                   onChange={() =>
                     handleRadioChange(student["ROLL NO"], "absent")
                   }
@@ -159,6 +164,7 @@ function Attendance() {
                 <input
                   type="radio"
                   name={`attendance-${student["ROLL NO"]}`}
+                  checked={attendance[student["ROLL NO"]]?.od || false}
                   onChange={() => handleRadioChange(student["ROLL NO"], "od")}
                 />
               </td>
@@ -166,6 +172,9 @@ function Attendance() {
                 <input
                   type="radio"
                   name={`attendance-${student["ROLL NO"]}`}
+                  checked={
+                    attendance[student["ROLL NO"]]?.informedLeave || false
+                  }
                   onChange={() =>
                     handleRadioChange(student["ROLL NO"], "informedLeave")
                   }
