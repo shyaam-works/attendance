@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./components/Home";
 import ClassSelection from "./components/ClassSelection";
 import Attendance from "./components/Attendance";
@@ -9,7 +9,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/attendance" element={<Home />} />
+        <Route path="/" element={<Home />} />
         <Route path="/select-class" element={<ClassSelection />} />
         <Route path="/attendance/:className" element={<Attendance />} />
       </Routes>
