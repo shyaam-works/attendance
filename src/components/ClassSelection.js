@@ -7,6 +7,7 @@ const ClassSelection = () => {
     "I-CSE-B",
     "I-CSE-C",
     "II-CSE-A",
+    "II-CSE-B",
     "II-CSE-C",
     "III-CSE-A",
     "III-CSE-B",
