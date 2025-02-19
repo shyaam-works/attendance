@@ -14,12 +14,14 @@ const ClassSelection = () => {
   ];
 
   return (
-    <div>
+    <div className="class-selection-container">
       <h2>Select a Class</h2>
-      <ul>
+      <ul className="class-list">
         {classes.map((className) => (
           <li key={className}>
-            <Link to={`/attendance/${className}`}>{className}</Link>
+            <Link to={`/attendance/${className}`} className="class-link">
+              {className}
+            </Link>
           </li>
         ))}
       </ul>
