@@ -5,11 +5,28 @@ function ClassSelection() {
   const navigate = useNavigate();
 
   return (
-    <div className="container">
-      <h1>Select Your Class</h1>
-      <button onClick={() => navigate("/attendance/CSE-A")}>CSE A</button>
-      <button onClick={() => navigate("/attendance/Sheet1")}>CSE B</button>
-      <button onClick={() => navigate("/attendance/CSE-C")}>CSE C</button>
+    <div className="class-bg">
+      <div className="class-container">
+        <h1 className="h1">Select Your Class</h1>
+        <button
+          className="classbtn"
+          onClick={() => navigate("/attendance/CSE-A")}
+        >
+          CSE A
+        </button>
+        <button
+          className="classbtn"
+          onClick={() => navigate("/attendance/CSE-B")}
+        >
+          CSE B
+        </button>
+        <button
+          className="classbtn"
+          onClick={() => navigate("/attendance/CSE-C")}
+        >
+          CSE C
+        </button>
+      </div>
     </div>
   );
 }

@@ -48,8 +48,7 @@ function Attendance() {
     setAttendance((prev) => ({
       ...prev,
       [rollNo]: {
-        externalOd: type === "externalOd",
-        internalOd: type === "internalOd",
+        od: type === "od",
         absent: type === "absent",
         informedLeave: type === "informedLeave",
       },
@@ -61,13 +60,11 @@ function Attendance() {
 
     const date = new Date().toLocaleDateString("en-GB");
     let absentCount = 0;
-    let externalOdCount = 0;
+    let odCount = 0;
     let informedLeaveCount = 0;
-    let internalOdCount = 0;
     let absentList = [];
-    let externalOdList = [];
+    let odList = [];
     let informedLeaveList = [];
-    let internalOdList = [];
 
     students.forEach((student) => {
       const rollNo = student["ROLL NO"];
@@ -76,34 +73,27 @@ function Attendance() {
           absentCount++;
           absentList.push(`${rollNo} ${student.NAME}`);
         }
-        if (attendance[rollNo].externalOd) {
-          externalOdCount++;
-          externalOdList.push(`${rollNo} ${student.NAME}`);
+        if (attendance[rollNo].od) {
+          odCount++;
+          odList.push(`${rollNo} ${student.NAME}`);
         }
         if (attendance[rollNo].informedLeave) {
           informedLeaveCount++;
           informedLeaveList.push(`${rollNo} ${student.NAME}`);
         }
-        if (attendance[rollNo].internalOd) {
-          internalOdCount++;
-          internalOdList.push(`${rollNo} ${student.NAME}`);
-        }
       }
     });
 
     let message = `${date}\nAttendance Summary: ${
-      students.length - (absentCount + externalOdCount + informedLeaveCount)
+      students.length - (absentCount + odCount + informedLeaveCount)
     }/${students.length}`;
 
     if (absentCount > 0) message += `\n\nAbsent:\n${absentList.join("\n")}`;
-    if (externalOdCount > 0)
-      message += `\n\nExternal OD:\n${externalOdList.join("\n")}`;
+    if (odCount > 0) message += `\n\nOD:\n${odList.join("\n")}`;
     if (informedLeaveCount > 0)
       message += `\n\nInformed Leave:\n${informedLeaveList.join("\n")}`;
-    if (internalOdCount > 0)
-      message += `\n\nInternal OD:\n${internalOdList.join("\n")}`;
 
-    if (absentCount === 0 && externalOdCount === 0 && informedLeaveCount === 0)
+    if (absentCount === 0 && odCount === 0 && informedLeaveCount === 0)
       message += "\n\nNil";
 
     message += `\n\nThank you all`;
@@ -126,22 +116,23 @@ function Attendance() {
 
   return (
     <div className="container">
-      <h1>{className} Attendance</h1>
+      <h1 className="cn"> Attendance</h1>
       <input
+        className="inputbx"
         type="text"
         placeholder="Search by Name or Roll No"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
       />
+      <p className="sec"> CLASS: {className}</p>
 
-      <table>
+      <table className="table-container">
         <thead>
           <tr>
             <th>Roll No</th>
             <th>Name</th>
             <th>Absent</th>
-            <th>External OD</th>
-            <th>Internal OD</th>
+            <th>OD</th>
             <th>Informed Leave</th>
           </tr>
         </thead>
@@ -163,18 +154,7 @@ function Attendance() {
                 <input
                   type="radio"
                   name={`attendance-${student["ROLL NO"]}`}
-                  onChange={() =>
-                    handleRadioChange(student["ROLL NO"], "externalOd")
-                  }
-                />
-              </td>
-              <td>
-                <input
-                  type="radio"
-                  name={`attendance-${student["ROLL NO"]}`}
-                  onChange={() =>
-                    handleRadioChange(student["ROLL NO"], "internalOd")
-                  }
+                  onChange={() => handleRadioChange(student["ROLL NO"], "od")}
                 />
               </td>
               <td>
@@ -191,12 +171,19 @@ function Attendance() {
         </tbody>
       </table>
 
-      <button onClick={generateAttendanceMessage}>Generate Message</button>
-      <button onClick={sendToWhatsApp} disabled={!attendanceMessage}>
+      <button className="gbutton" onClick={generateAttendanceMessage}>
+        Generate Message
+      </button>
+      <button
+        className="gbutton"
+        onClick={sendToWhatsApp}
+        disabled={!attendanceMessage}
+      >
         Send to WhatsApp
       </button>
 
       <textarea
+        className="gmsg"
         readOnly
         value={attendanceMessage}
         rows={10}

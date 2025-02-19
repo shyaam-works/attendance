@@ -4,18 +4,23 @@
   box-sizing: border-box;
 }
 
+body {
+  background-image: url("../public/bg.webp");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
 .container {
   font-family: Arial, sans-serif;
-  max-width: 900px;
+  max-width: 100%;
   margin: auto;
   padding: 20px;
-  background-color: #f4f4f9;
   text-align: center;
 }
 
 h1 {
   text-align: center;
-  color: #333;
+  color: black;
   font-size: 2rem;
   margin-bottom: 20px;
 }
@@ -26,39 +31,50 @@ h1 {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 100%;
+  margin-top: 16%;
+  width: 50%;
+  margin-left: 25%;
+
+  padding: 30px;
 }
 
 .home-container h1 {
   font-size: 2.5rem;
-  color: #4caf50;
+  color: #000000;
 }
-
-.mark-attendance-btn {
+.homebtn {
   margin-top: 20px;
   padding: 15px 25px;
   font-size: 1.2rem;
-  background-color: #4caf50;
-  color: white;
+  color: rgb(0, 0, 0);
+  background-color: white;
   border: none;
   border-radius: 8px;
   cursor: pointer;
   transition: 0.3s ease;
 }
-
-.mark-attendance-btn:hover {
-  background-color: #45a049;
+.homebtn:hover {
+  background-color: rgb(0, 0, 0);
+  color: white;
+}
+.home-bg {
+  background-image: url("../public/bg.webp");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
 }
 
-/* Class Selection Page */
+.h1 {
+  margin-top: 16%;
+}
 .class-buttons {
   display: flex;
   justify-content: center;
   gap: 15px;
-  margin-top: 30px;
 }
 
-.class-buttons button {
+.classbtn {
   background-color: #007bff;
   color: white;
   font-size: 1.1rem;
@@ -69,10 +85,35 @@ h1 {
   transition: 0.3s ease;
 }
 
-.class-buttons button:hover {
+.classbtn:hover {
   background-color: #0056b3;
 }
-
+.cn {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+.inputbx {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  width: 300px;
+  margin-top: 20px;
+}
+.inputbx:focus {
+  outline: none;
+  border: 2px solid #69b9e1;
+  box-shadow: 0 0 5px rgba(73, 73, 224, 0.5);
+}
+.sec {
+  text-align: left;
+  margin-left: 10%;
+  font-weight: bold;
+  margin-top: 30px;
+}
+.sec2 {
+  text-align: left;
+  font-weight: bold;
+  margin-left: 10%;
+}
 /* Table Styles */
 .table-container {
   overflow-x: auto;
@@ -80,12 +121,15 @@ h1 {
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 90%;
+  margin-left: 5%;
+  margin-top: 3%;
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
-  min-width: 700px;
+  max-width: 500px;
 }
 
 th,
@@ -94,15 +138,12 @@ td {
   text-align: left;
   border: 1px solid #ddd;
   font-size: 0.95rem;
+  border: 2px solid rgba(0, 0, 0, 0.092);
 }
 
 th {
-  background-color: #4caf50;
+  background-color: #036176;
   color: white;
-}
-
-tr:nth-child(even) {
-  background-color: #f2f2f2;
 }
 
 tr:hover {
@@ -114,15 +155,13 @@ input[type="checkbox"] {
   height: 20px;
   cursor: pointer;
 }
-
-/* Buttons */
 button {
   display: block;
   width: 100%;
   max-width: 250px;
   margin: 20px auto;
   padding: 12px;
-  background-color: #4caf50;
+  background-color: #214af1;
   color: white;
   border: none;
   border-radius: 5px;
@@ -130,25 +169,74 @@ button {
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
+/* Buttons */
+.gbutton {
+  display: block;
+  width: 100%;
+  max-width: 250px;
+  margin: 20px auto;
+  padding: 12px;
+  background-color: #214af1;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.gbutton:hover {
+  background-color: #0056b3;
+}
+.gmsg {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  width: 600px;
+  margin-top: 20px;
+}
+.gmsg:hover {
+}
+/* For tablets and smaller laptops (max-width: 1024px) */
+@media (max-width: 1024px) {
+  .home-container {
+    width: 70%;
+    margin-left: 15%;
+  }
 
-button:hover {
-  background-color: #45a049;
+  .table-container {
+    max-width: 95%;
+    margin-left: 2.5%;
+  }
 }
 
-/* Responsive Adjustments */
+/* For tablets and large phones (max-width: 768px) */
 @media (max-width: 768px) {
-  h1 {
-    font-size: 1.75rem;
+  .home-container {
+    width: 85%;
+    margin-left: 7.5%;
+    margin-top: 10%;
+    padding: 15px;
   }
 
   .class-buttons {
     flex-direction: column;
+    align-items: center;
   }
 
-  .class-buttons button {
-    width: 80%;
+  .classbtn {
+    width: 100%;
     font-size: 1rem;
-    padding: 10px;
+    padding: 12px;
+  }
+
+  .inputbx {
+    width: 100%;
+  }
+
+  .table-container {
+    max-width: 100%;
+    margin-left: 0;
+    overflow-x: auto;
   }
 
   th,
@@ -158,14 +246,19 @@ button:hover {
   }
 
   button {
-    font-size: 0.95rem;
-    padding: 10px;
+    font-size: 1rem;
+    padding: 12px;
+  }
+
+  .gmsg {
+    width: 100%;
   }
 }
 
+/* For mobile phones (max-width: 480px) */
 @media (max-width: 480px) {
   .container {
-    padding: 15px;
+    padding: 10px;
   }
 
   h1 {
@@ -173,9 +266,15 @@ button:hover {
     margin-bottom: 15px;
   }
 
+  .home-container {
+    width: 95%;
+    margin-left: 2.5%;
+    padding: 15px;
+  }
+
   .table-container {
-    border: none;
     box-shadow: none;
+    overflow-x: auto;
   }
 
   table {
@@ -188,14 +287,44 @@ button:hover {
     padding: 8px;
   }
 
-  input[type="text"] {
+  input[type="text"],
+  .inputbx {
     font-size: 0.9rem;
     padding: 8px;
     max-width: 100%;
   }
 
-  .mark-attendance-btn {
+  .homebtn,
+  .classbtn,
+  .gbutton {
     font-size: 1rem;
-    padding: 12px 18px;
+    padding: 12px;
+    width: 100%;
+  }
+}
+
+/* For extra small phones (max-width: 360px) */
+@media (max-width: 360px) {
+  .home-container {
+    width: 100%;
+    padding: 10px;
+    margin-top: 50%;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+  .class-container {
+    margin-top: 50%;
+  }
+  .homebtn {
+    padding: 10px;
+    font-size: 0.9rem;
+  }
+
+  th,
+  td {
+    font-size: 0.8rem;
+    padding: 6px;
   }
 }
