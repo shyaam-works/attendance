@@ -23,8 +23,13 @@ function Attendance() {
         return response.json();
       })
       .then((data) => {
-        setStudents(data);
-        console.log(data);
+        // Convert student names to uppercase
+        const updatedStudents = data.map((student) => ({
+          ...student,
+          NAME: student.NAME.toUpperCase(),
+        }));
+        setStudents(updatedStudents);
+        console.log(updatedStudents);
         setLoading(false);
       })
       .catch(() => {
@@ -74,15 +79,15 @@ function Attendance() {
       if (attendance[rollNo]) {
         if (attendance[rollNo].absent) {
           absentCount++;
-          absentList.push(`${rollNo} ${student.NAME}`);
+          absentList.push(`${rollNo} ${student.NAME.toUpperCase()}`);
         }
         if (attendance[rollNo].od) {
           odCount++;
-          odList.push(`${rollNo} ${student.NAME}`);
+          odList.push(`${rollNo} ${student.NAME.toUpperCase()}`);
         }
         if (attendance[rollNo].informedLeave) {
           informedLeaveCount++;
-          informedLeaveList.push(`${rollNo} ${student.NAME}`);
+          informedLeaveList.push(`${rollNo} ${student.NAME.toUpperCase()}`);
         }
       }
     });
@@ -145,7 +150,7 @@ function Attendance() {
           {filteredStudents.map((student) => (
             <tr key={student["ROLL NO"]}>
               <td>{student["ROLL NO"]}</td>
-              <td>{student.NAME}</td>
+              <td>{student.NAME.toUpperCase()}</td>
               <td>
                 <input
                   type="radio"
