@@ -6,7 +6,7 @@ function Attendance() {
   console.log(className);
   const [students, setStudents] = useState([]);
   const [attendance, setAttendance] = useState({});
-  const [attendanceMessage, setAttendanceMessage] = "";
+  const [attendanceMessage, setAttendanceMessage] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -23,12 +23,8 @@ function Attendance() {
         return response.json();
       })
       .then((data) => {
-        const formattedData = data.map((student) => ({
-          ...student,
-          NAME: student.NAME.toUpperCase(),
-        }));
-        setStudents(formattedData);
-        console.log(formattedData);
+        setStudents(data);
+        console.log(data);
         setLoading(false);
       })
       .catch(() => {
